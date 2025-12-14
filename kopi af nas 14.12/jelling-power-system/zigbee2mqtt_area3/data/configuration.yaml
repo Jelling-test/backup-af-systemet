@@ -1,0 +1,222 @@
+version: 4
+mqtt:
+  base_topic: zigbee2mqtt_area3
+  server: mqtt://mosquitto:1883
+  user: homeassistant
+  password: 7200Grindsted!
+serial:
+  port: tcp://192.168.1.9:6638
+  adapter: ember
+  baudrate: 115200
+  rtscts: false
+advanced:
+  log_level: info
+  channel: 11
+  network_key:
+    - 136
+    - 242
+    - 189
+    - 220
+    - 252
+    - 64
+    - 159
+    - 249
+    - 97
+    - 124
+    - 50
+    - 237
+    - 207
+    - 64
+    - 159
+    - 52
+  pan_id: 62969
+  ext_pan_id:
+    - 30
+    - 28
+    - 248
+    - 173
+    - 90
+    - 28
+    - 203
+    - 84
+  homeassistant_legacy_entity_attributes: false
+  legacy_api: false
+  legacy_availability_payload: false
+  last_seen: ISO_8601
+frontend:
+  enabled: true
+  port: 8080
+  title: "Område 200"
+homeassistant:
+  enabled: true
+onboarding: false
+device_options:
+  legacy: false
+devices:
+  '0x180df9fffe9a69de':
+    friendly_name: repeater plads 225.230
+  '0xbc8d7efffe2fba75':
+    friendly_name: '230'
+  '0xbc8d7efffe14a600':
+    friendly_name: '229'
+  '0xbc8d7efffe13f4a5':
+    friendly_name: '228'
+  '0xdc8e95fffe93c5e2':
+    friendly_name: 212,2
+  '0xbc8d7efffe12c581':
+    friendly_name: '212'
+  '0x781c9dfffee43d56':
+    friendly_name: '211'
+  '0x180df9fffe9a79e3':
+    friendly_name: repeater - plads 207 v hæk
+  '0x781c9dfffee44da5':
+    friendly_name: '213'
+  '0xbc8d7efffe12ccaf':
+    friendly_name: '227'
+  '0xbc8d7efffe221c9b':
+    friendly_name: F18
+  '0xbc8d7efffe21fab6':
+    friendly_name: F20
+  '0xbc8d7efffe21a5d7':
+    friendly_name: F21
+  '0x781c9dfffee43d85':
+    friendly_name: '216'
+  '0xbc8d7efffe124062':
+    friendly_name: '200'
+  '0xbc8d7efffe151802':
+    friendly_name: '201'
+  '0xbc8d7efffe21ab1c':
+    friendly_name: '202'
+  '0x880f62fffe03cbf0':
+    friendly_name: '203'
+  '0xbc8d7efffe12c74a':
+    friendly_name: '204'
+  '0xbc8d7efffe14ad28':
+    friendly_name: '205'
+  '0xbc8d7efffe21fa8b':
+    friendly_name: '206'
+  '0xbc8d7efffe14ab63':
+    friendly_name: '207'
+  '0xbc8d7efffe14ce3a':
+    friendly_name: '214'
+  '0xbc8d7efffe12c0f3':
+    friendly_name: '215'
+  '0xbc8d7efffe145f70':
+    friendly_name: '217'
+  '0xbc8d7efffe215a7c':
+    friendly_name: '218'
+  '0xbc8d7efffe300c86':
+    friendly_name: '219'
+  '0x781c9dfffee44908':
+    friendly_name: '220'
+  '0xbc8d7efffe12d426':
+    friendly_name: '221'
+  '0x781c9dfffee44bbe':
+    friendly_name: '222'
+  '0xbc8d7efffe152434':
+    friendly_name: '223'
+  '0xbc8d7efffe12ebdd':
+    friendly_name: '209'
+  '0xbc8d7efffe12db2b':
+    friendly_name: '210'
+  '0x781c9dfffee44b63':
+    friendly_name: 210,2
+  '0xbc8d7efffe14a79d':
+    friendly_name: F25
+  '0x781c9dfffee44b9a':
+    friendly_name: '234'
+  '0x781c9dfffee44bbf':
+    friendly_name: '235'
+  '0xbc8d7efffe148e49':
+    friendly_name: '236'
+  '0xbc8d7efffe12ea70':
+    friendly_name: '241'
+  '0xbc8d7efffe155d6b':
+    friendly_name: '242'
+  '0xbc8d7efffe1339d0':
+    friendly_name: '243'
+  '0xbc8d7efffe218ed5':
+    friendly_name: '231'
+  '0xbc8d7efffe149021':
+    friendly_name: '232'
+  '0xbc8d7efffe13fbf4':
+    friendly_name: '233'
+  '0xbc8d7efffe217b71':
+    friendly_name: F4
+  '0xbc8d7efffe146d3e':
+    friendly_name: F11
+  '0xbc8d7efffe124059':
+    friendly_name: F12
+  '0xbc8d7efffe14b9a5':
+    friendly_name: F19
+  '0xbc8d7efffe21aa56':
+    friendly_name: '249'
+  '0x781c9dfffee44b8d':
+    friendly_name: F16
+  '0x781c9dfffee44dab':
+    friendly_name: F10
+  '0xbc8d7efffe14cb24':
+    friendly_name: '250'
+  '0xbc8d7efffe14e381':
+    friendly_name: '251'
+  '0x781c9dfffee4438e':
+    friendly_name: F17
+  '0x781c9dfffee44d69':
+    friendly_name: F7
+  '0xbc8d7efffe21b5dc':
+    friendly_name: F15
+  '0xbc8d7efffe152470':
+    friendly_name: '262'
+  '0xbc8d7efffe145c35':
+    friendly_name: F1
+  '0xbc8d7efffe30568b':
+    friendly_name: F2
+  '0xbc8d7efffe12d44a':
+    friendly_name: F3
+  '0x781c9dfffee441e0':
+    friendly_name: F5
+  '0x781c9dfffee43da9':
+    friendly_name: F6
+  '0xbc8d7efffe2f8da1':
+    friendly_name: '224'
+  '0xbc8d7efffe157600':
+    friendly_name: '225'
+  '0xbc8d7efffe1329f4':
+    friendly_name: '226'
+  '0xbc8d7efffe14bb16':
+    friendly_name: F26
+  '0x781c9dfffee436c9':
+    friendly_name: F27
+  '0xbc8d7efffe302298':
+    friendly_name: F22
+  '0xbc8d7efffe217413':
+    friendly_name: F24
+  '0xbc8d7efffe13ca23':
+    friendly_name: F23
+  '0xbc8d7efffe14b880':
+    friendly_name: X4
+  '0xbc8d7efffe149a96':
+    friendly_name: X5
+  '0x781c9dfffee44da3':
+    friendly_name: X6
+  '0x781c9dfffee436b4':
+    friendly_name: '237'
+  '0xbc8d7efffe159ff3':
+    friendly_name: F13
+  '0xbc8d7efffe149a7e':
+    friendly_name: '245'
+  '0x781c9dfffee43f0d':
+    friendly_name: F8
+  '0xbc8d7efffe151b93':
+    friendly_name: F9
+  '0xbc8d7efffe21b89b':
+    friendly_name: F14
+availability:
+  enabled: true
+  active:
+    timeout: 10
+    max_jitter: 30000
+    backoff: true
+    pause_on_backoff_gt: 15
+  passive:
+    timeout: 1500

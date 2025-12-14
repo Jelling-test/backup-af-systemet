@@ -1,0 +1,350 @@
+# =============================================================================
+# JELLING POWER SYSTEM - KOMPLET DOCKER COMPOSE
+# =============================================================================
+# Version: 2.0 (Samlet projekt)
+# Dato: 2. december 2025
+# 
+# VIGTIGT:
+# - Start ALTID med: docker-compose up -d
+# - Area 4-6 starter IKKE automatisk (mangler antenner)
+# - Start area 4-6 med: docker-compose --profile future up -d
+# =============================================================================
+
+version: '3.9'
+name: jelling-power
+
+# =============================================================================
+# FÆLLES NETVÆRK
+# =============================================================================
+networks:
+  jelling-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+# =============================================================================
+# SERVICES
+# =============================================================================
+services:
+
+  # ===========================================================================
+  # NIVEAU 1: INFRASTRUKTUR (starter først)
+  # ===========================================================================
+  
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: mosquitto
+    restart: unless-stopped
+    ports:
+      - "192.168.9.61:1890:1883"
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    networks:
+      - jelling-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ===========================================================================
+  # NIVEAU 2: ZIGBEE CONTROLLERS (aktive)
+  # ===========================================================================
+
+  zigbee2mqtt:
+    image: koenkk/zigbee2mqtt:latest
+    container_name: zigbee2mqtt
+    restart: unless-stopped
+    depends_on:
+      - mosquitto
+    ports:
+      - "192.168.9.61:8082:8080"
+    environment:
+      - TZ=Europe/Copenhagen
+    volumes:
+      - ./zigbee2mqtt/data:/app/data
+    networks:
+      - jelling-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  zigbee2mqtt_area2:
+    image: koenkk/zigbee2mqtt:latest
+    container_name: zigbee2mqtt_area2
+    restart: unless-stopped
+    depends_on:
+      - mosquitto
+    ports:
+      - "192.168.9.61:8083:8080"
+    environment:
+      - TZ=Europe/Copenhagen
+    volumes:
+      - ./zigbee2mqtt_area2/data:/app/data
+    networks:
+      - jelling-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  zigbee2mqtt_area3:
+    image: koenkk/zigbee2mqtt:latest
+    container_name: zigbee2mqtt_area3
+    restart: unless-stopped
+    depends_on:
+      - mosquitto
+    ports:
+      - "192.168.9.61:8084:8080"
+    environment:
+      - TZ=Europe/Copenhagen
+    volumes:
+      - ./zigbee2mqtt_area3/data:/app/data
+    networks:
+      - jelling-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  zigbee2mqtt_3p:
+    image: koenkk/zigbee2mqtt:latest
+    container_name: zigbee2mqtt_3p
+    restart: unless-stopped
+    depends_on:
+      - mosquitto
+    ports:
+      - "192.168.9.61:8088:8080"
+    environment:
+      - TZ=Europe/Copenhagen
+    volumes:
+      - ./zigbee2mqtt_3p/data:/app/data
+    networks:
+      - jelling-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ===========================================================================
+  # NIVEAU 2: ZIGBEE CONTROLLERS (venter på antenner - profile: future)
+  # ===========================================================================
+
+  zigbee2mqtt_area4:
+    image: koenkk/zigbee2mqtt:latest
+    container_name: zigbee2mqtt_area4
+    restart: unless-stopped
+    depends_on:
+      - mosquitto
+    ports:
+      - "192.168.9.61:8085:8080"
+    environment:
+      - TZ=Europe/Copenhagen
+    volumes:
+      - ./zigbee2mqtt_area4/data:/app/data
+    networks:
+      - jelling-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  zigbee2mqtt_area5:
+    image: koenkk/zigbee2mqtt:latest
+    container_name: zigbee2mqtt_area5
+    restart: unless-stopped
+    depends_on:
+      - mosquitto
+    ports:
+      - "192.168.9.61:8086:8080"
+    environment:
+      - TZ=Europe/Copenhagen
+    volumes:
+      - ./zigbee2mqtt_area5/data:/app/data
+    networks:
+      - jelling-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  zigbee2mqtt_area6:
+    image: koenkk/zigbee2mqtt:latest
+    container_name: zigbee2mqtt_area6
+    profiles: ["future"]  # Starter IKKE automatisk
+    restart: unless-stopped
+    depends_on:
+      - mosquitto
+    ports:
+      - "192.168.9.61:8087:8080"
+    environment:
+      - TZ=Europe/Copenhagen
+    volumes:
+      - ./zigbee2mqtt_area6/data:/app/data
+    networks:
+      - jelling-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ===========================================================================
+  # NIVEAU 3: DATA SERVICES
+  # ===========================================================================
+
+  device-sync:
+    build: ./device-sync
+    container_name: device-sync
+    restart: unless-stopped
+    depends_on:
+      - mosquitto
+    env_file:
+      - .env
+    environment:
+      - TZ=Europe/Copenhagen
+      - ENABLE_POWER_SECURITY=true
+    networks:
+      - jelling-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  mqtt-command-processor:
+    build: ./command-processor
+    container_name: mqtt-command-processor
+    restart: unless-stopped
+    depends_on:
+      - mosquitto
+    env_file:
+      - .env
+    environment:
+      - TZ=Europe/Copenhagen
+    networks:
+      - jelling-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  telegraf:
+    image: telegraf:1.30
+    container_name: telegraf
+    restart: unless-stopped
+    depends_on:
+      - mosquitto
+    volumes:
+      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    networks:
+      - jelling-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ===========================================================================
+  # NIVEAU 4: APPLICATION SERVICES
+  # ===========================================================================
+
+  mqtt-config-service:
+    build: ./maaler-opsaetning
+    container_name: mqtt-config-service
+    restart: unless-stopped
+    depends_on:
+      - mosquitto
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - TZ=Europe/Copenhagen
+    networks:
+      - jelling-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  power-monitor-backend:
+    build: ./power-monitor/backend
+    container_name: power-monitor-backend
+    restart: unless-stopped
+    depends_on:
+      - mosquitto
+    env_file:
+      - .env
+    ports:
+      - "3010:3001"
+      - "8090:8090"
+    networks:
+      - jelling-net
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3001/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  power-monitor-frontend:
+    build: ./power-monitor/frontend
+    container_name: power-monitor-frontend
+    restart: unless-stopped
+    depends_on:
+      - power-monitor-backend
+    ports:
+      - "3002:80"
+    networks:
+      - jelling-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ===========================================================================
+  # NIVEAU 5: HOME ASSISTANT (valgfri)
+  # ===========================================================================
+
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: homeassistant
+    restart: unless-stopped
+    depends_on:
+      - mosquitto
+    ports:
+      - "192.168.9.61:8124:8123"
+    environment:
+      - TZ=Europe/Copenhagen
+    volumes:
+      - ./homeassistant/config:/config
+    networks:
+      - jelling-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
