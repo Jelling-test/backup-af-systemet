@@ -307,14 +307,14 @@ const GuestWelcome = () => {
   const statusBadge = getStatusBadge();
 
   const sections = [
-    { to: '/guest/power', image: sectionImages.power, label: t('power'), sublabel: language === 'da' ? 'Styr din strøm' : 'Manage your power' },
-    { to: '/guest/bakery', image: sectionImages.bakery, label: t('bakery'), sublabel: language === 'da' ? 'Friske morgenbrød' : 'Fresh morning bread' },
-    { to: '/guest/events', image: sectionImages.events, label: t('events'), sublabel: language === 'da' ? 'Se hvad der sker' : 'See what\'s happening' },
-    { to: '/guest/attractions', image: sectionImages.attractions, label: t('attractions'), sublabel: language === 'da' ? 'Oplevelser i nærheden' : 'Nearby experiences' },
-    { to: '/guest/cafe', image: sectionImages.cafe, label: t('cafe'), sublabel: language === 'da' ? 'Mad & drikke' : 'Food & drinks' },
-    { to: '/guest/practical', image: sectionImages.practical, label: t('practical'), sublabel: language === 'da' ? 'Nødvendig info' : 'Essential info' },
-    { to: '/guest/pool', image: sectionImages.pool, label: language === 'da' ? 'Friluftsbad' : language === 'de' ? 'Freibad' : 'Outdoor Pool', sublabel: language === 'da' ? 'Fri adgang for gæster' : 'Free access for guests' },
-    { to: '/guest/playground', image: sectionImages.playground, label: language === 'da' ? 'Legeplads' : language === 'de' ? 'Spielplatz' : 'Playground', sublabel: language === 'da' ? 'Sjov for hele familien' : 'Fun for the whole family' },
+    { to: '/guest/power', image: sectionImages.power, label: t('power'), sublabel: language === 'da' ? 'Styr din strøm' : language === 'de' ? 'Verwalten Sie Ihren Strom' : language === 'nl' ? 'Beheer uw stroom' : 'Manage your power' },
+    { to: '/guest/bakery', image: sectionImages.bakery, label: t('bakery'), sublabel: language === 'da' ? 'Friske morgenbrød' : language === 'de' ? 'Frische Morgenbrötchen' : language === 'nl' ? 'Verse ochtendbroodjes' : 'Fresh morning bread' },
+    { to: '/guest/events', image: sectionImages.events, label: t('events'), sublabel: language === 'da' ? 'Se hvad der sker' : language === 'de' ? 'Sehen Sie, was passiert' : language === 'nl' ? 'Bekijk wat er gebeurt' : 'See what\'s happening' },
+    { to: '/guest/attractions', image: sectionImages.attractions, label: t('attractions'), sublabel: language === 'da' ? 'Oplevelser i nærheden' : language === 'de' ? 'Erlebnisse in der Nähe' : language === 'nl' ? 'Ervaringen in de buurt' : 'Nearby experiences' },
+    { to: '/guest/cafe', image: sectionImages.cafe, label: t('cafe'), sublabel: language === 'da' ? 'Mad & drikke' : language === 'de' ? 'Essen & Trinken' : language === 'nl' ? 'Eten & drinken' : 'Food & drinks' },
+    { to: '/guest/practical', image: sectionImages.practical, label: t('practical'), sublabel: language === 'da' ? 'Nødvendig info' : language === 'de' ? 'Wichtige Infos' : language === 'nl' ? 'Belangrijke info' : 'Essential info' },
+    { to: '/guest/pool', image: sectionImages.pool, label: language === 'da' ? 'Friluftsbad' : language === 'de' ? 'Freibad' : language === 'nl' ? 'Buitenzwembad' : 'Outdoor Pool', sublabel: language === 'da' ? 'Fri adgang for gæster' : language === 'de' ? 'Freier Zugang für Gäste' : language === 'nl' ? 'Gratis toegang voor gasten' : 'Free access for guests' },
+    { to: '/guest/playground', image: sectionImages.playground, label: language === 'da' ? 'Legeplads' : language === 'de' ? 'Spielplatz' : language === 'nl' ? 'Speeltuin' : 'Playground', sublabel: language === 'da' ? 'Sjov for hele familien' : language === 'de' ? 'Spaß für die ganze Familie' : language === 'nl' ? 'Plezier voor het hele gezin' : 'Fun for the whole family' },
   ];
 
   // Tilføj Cabin for hytte-gæster (uanset check-in status)
@@ -323,7 +323,7 @@ const GuestWelcome = () => {
       to: '/guest/cabin', 
       image: sectionImages.cabin, 
       label: t('cabin') || 'Din hytte',
-      sublabel: language === 'da' ? 'Info om din hytte' : 'Cabin information'
+      sublabel: language === 'da' ? 'Info om din hytte' : language === 'de' ? 'Infos zu Ihrer Hütte' : language === 'nl' ? 'Info over uw hut' : 'Cabin information'
     });
   }
 
